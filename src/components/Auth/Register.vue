@@ -1,14 +1,15 @@
 <template>
   <div>
-    <div class="login-wrap">
-      <h3>登录</h3>
+    <div class="register-wrap">
+      <h3>注册</h3>
       <p v-show="showTishi">{{tishi}}</p>
+      <input type="text" placeholder="请输入用户名" v-model="username">
       <input type="text" placeholder="请输入邮箱" v-model="email">
       <input type="password" placeholder="请输入密码" v-model="password">
-      <button v-on:click="login">登录</button>
+      <button v-on:click="register">注册</button>
       <span>
-        <router-link to="/register">
-          没有账号？马上注册
+        <router-link to="/login">
+          已有账号？马上登录
         </router-link>
       </span>
     </div>
@@ -18,25 +19,27 @@
 <script>
 import axios from 'axios'
 export default {
-  name: 'Login',
+  name: 'Register',
   data () {
     return {
       showTishi: false,
       tishi: '',
+      username: '',
       email: '',
       password: ''
     }
   },
   methods: {
-    login () {
+    register () {
       const data = {
+        'username': this.username,
         'email': this.email,
         'password': this.password
       }
-      axios.post('http://localhost:5000/login', data)
+      axios.post('http://localhost:5000/register', data)
         .then(function (res) {
           console.log(res)
-          this.$router.push('/home')
+          this.$router.push('/login')
         })
         .catch(function (error) {
           console.log(error)
@@ -47,7 +50,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-  .login-wrap
+  .register-wrap
     text-align center
     input
       display block
